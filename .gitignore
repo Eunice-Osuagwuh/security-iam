@@ -1,7 +1,4 @@
-node_modules
-dist
-.DS_Store
-.env
-.env.example
-.codex/
-.claude/
+node_modules/
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
