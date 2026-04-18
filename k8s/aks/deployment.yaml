@@ -14,6 +14,8 @@ spec:
     spec:
       containers:
         - name: tasklineapp
-          image: REGISTRY_IMAGE_PLACEHOLDER
+          image: ghcr.io/eunice-osuagwuh/tasklineapp:b04f4970bddbfed9f86c8e9b1c5c37819c741631
           ports:
             - containerPort: 3000
+      imagePullSecrets:
+        - name: ghcr-secret
