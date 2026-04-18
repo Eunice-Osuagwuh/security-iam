@@ -4,18 +4,44 @@ metadata:
   name: tasklineapp
 spec:
   replicas: 1
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
   selector:
     matchLabels:
       app: tasklineapp
+
   template:
     metadata:
       labels:
         app: tasklineapp
+
     spec:
-      containers:
-        - name: tasklineapp
-          image: ghcr.io/eunice-osuagwuh/tasklineapp:b04f4970bddbfed9f86c8e9b1c5c37819c741631
-          ports:
-            - containerPort: 3000
+      terminationGracePeriodSeconds: 30
+
       imagePullSecrets:
         - name: ghcr-secret
+
+      containers:
+        - name: tasklineapp
+          image: REGISTRY_IMAGE_PLACEHOLDER
+          ports:
+            - containerPort: 3000
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
